@@ -9,6 +9,8 @@
   <body>
     <br>
     <div class="container">
+        <a href="{% url 'index_view' %}">All Chirps</a>
+        <a href="{% url 'chirp_create_view' %}">Create Chirp</a>
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'logout' %}?next=/">Logout</a>
       {{request.user}}

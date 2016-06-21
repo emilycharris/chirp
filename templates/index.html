@@ -12,6 +12,10 @@
     </div>
     <div class="panel-body">
       {{chirp.body}}
+      {% if chirp.bird == request.user %}
+      <br>
+      <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details</a>
+      {% endif %}
     </div>
   </div>
   {% endfor %}
