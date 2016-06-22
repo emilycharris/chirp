@@ -3,7 +3,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
-from main.models import Chirp
+from main.models import Chirp, StopWord
 
 # Create your views here.
 
@@ -32,7 +32,14 @@ class ChirpCreateView(CreateView):
     #creates instance of chirp without actually updating database
 
     def form_valid(self, form):
+        # if Trump, Sanders, or Clinton in body, add error
 
+        stop_words = StopWord.objects.all()
+        chirp_body = form.cleaned_data['body'].lower()
+        for stop_word in stop_words:
+            if stop_word.word in chirp_body:
+                form.add_error('body', "Oops! Don't use that word!")
+                return self.form_invalid(form)
         chirp = form.save(commit=False)
         chirp.bird = self.request.user
         return super().form_valid(form)

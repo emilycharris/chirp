@@ -9,3 +9,6 @@ class Chirp(models.Model):
 
     class Meta:
         ordering = ['-created']
+
+class StopWord(models.Model):
+    word = models.CharField(max_length=26)
