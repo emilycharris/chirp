@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from main.models import Chirp, StopWord
+from main.models import Chirp, StopWord, Profile
 
 # Register your models here.
 
@@ -15,3 +15,5 @@ class StopWordAdmin(admin.ModelAdmin):
     search_fields = ['word']
 
 admin.site.register(StopWord, StopWordAdmin)
+
+admin.site.register(Profile)
