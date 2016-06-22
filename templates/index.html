@@ -3,20 +3,41 @@
 {% block content %}
   <h1>Welcome to Chirp</h1>
   <h4>{{amount}} chirps</h4>
-{% for chirp in  object_list%}
+  <div class="row">
+          <div class="col-md-6">
+              {% for chirp in object_list %}
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{{ chirp.bird }}</h3>
+                </div>
+                <div class="panel-body">
+                  {{ chirp.body }}
+                  {% if chirp.bird == request.user %}
+                      <br>
+                      <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>
+                      <br>
+                      <a class="btn btn-danger" href="{% url 'chirp_delete_view' chirp.pk %}">Delete Chirp</a>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+          </div>
+          {% if request.user.is_authenticated %}
+          <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Chirp Somethin'</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="" action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-default" type="submit" name="chirp" value="Chirp!">
+                    </form>
+                </div>
+              </div>
+          </div>
+           {% endif %}
+       </div>
 
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{chirp.bird}}</h3>
-    </div>
-    <div class="panel-body">
-      {{chirp.body}}
-      {% if chirp.bird == request.user %}
-      <br>
-      <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details</a>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
-  {% endblock %}
+   {% endblock %}
