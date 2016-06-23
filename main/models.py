@@ -21,6 +21,13 @@ class StopWord(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
     favorite_bird = models.CharField(max_length=100, null=True)
+    photo = models.ImageField(upload_to="profile_photos", null=True, blank=True, verbose_name="Profile Photo")
+
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url
+        return "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR2W6ZYpzxAAoUmouLrLAL5FDEaYfkOerUGh6u3OPwM_jEtwYif"
 
 @receiver(post_save, sender=StopWord)
 def say_hello(**kwargs):
